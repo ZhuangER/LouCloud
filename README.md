@@ -24,3 +24,18 @@
 
 # 技术架构
 整个项目的知识点比较集中，Web 开发+虚拟化开发。底层为 MySQL 数据库与QEMU 虚拟化，中间层的接口分别为 Flask-SQLAlchemy 及 Libvirt API。上层 Flask Web开发框架。
+
+
+#代码结构
+|-- README.md
+|-- loucloud
+|   |-- __init__.py
+|   |-- app.py
+|   |-- config.py
+|   |-- extension.py
+|   |-- static
+|   |-- templates
+|   `-- user
+|       |-- __init__.py
+|       `-- views.py
+`-- manage.py
