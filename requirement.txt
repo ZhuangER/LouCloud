@@ -1,0 +1,8 @@
+flask
+flask-sqlalchemy
+flask-wtf
+flask-cache
+flask-login
+flask-script
+paramiko
+mysql-python
