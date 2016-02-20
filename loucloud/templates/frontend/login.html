@@ -1,0 +1,7 @@
+{% extends "base/base.html" %}
+{% from "macros/_form.html" import render_form %}
+{% block body %}
+{% if form %}
+{{render_form(url_for('frontend.login'), form)}}
+{% endif %}
+{% endblock %}

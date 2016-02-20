@@ -1,3 +1,6 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+# encoding: utf-8
 
-from app import create_app
+from .host import host
+from .flask_app import app
+from .extensions import db

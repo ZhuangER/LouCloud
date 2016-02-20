@@ -1,0 +1,701 @@
+{% macro render_checkbox(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <div class="controls">
+        {{ field }}
+        <span class="help-inline">{{ field.label }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_switch(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls">
+        <div class="swtich" tabindex="0">
+        {{ field }}
+        </div>
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error|e }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_select(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls">
+        {{ field(class_='selectpicker') }}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error|e }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_comment_select(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls">
+        <input type="hidden" name="stars" value="1"/>
+        {% for item in field.choices %}
+            {% if loop.index == 1 %}
+                <span id="star{{ item[0] }}" value="{{ item[0] }}" style="font-size: 20px;cursor: pointer;color: #ED8181;" class="fa fa-star"></span>
+            {% else %}
+            <span id="star{{ item[0] }}" style="font-size: 20px;cursor: pointer;color: #ED8181;" value="{{ item[0] }}" class="fa fa-star-o"></span>
+            {% endif %}
+        {% endfor %}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error|e }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_radio(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    {{ field.label(class_="control-label") }}
+    <div class="controls">
+        {% for subfield in field -%}
+        <div class="radio">
+            <label for="{{ subfield.id }}">
+                {{ subfield }} {{ subfield.label.text }}
+            </label>
+        </div>
+        {%- endfor %}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_readonlyradio(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    {{ field.label(class_="control-label") }}
+    <div class="controls radioReadonly">
+        {% for subfield in field -%}
+        <label for="{{ subfield.id }}" class="radio inline">
+            {{ subfield }} {{ subfield.label.text }}
+        </label>
+        {%- endfor %}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+<script type="text/javascript">
+$('.radioReadonly input').each(function() {
+    $(this).attr('disabled', true);
+});
+</script>
+{% endmacro %}
+
+{% macro render_datepicker(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" 
+        for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls">
+        {{ field() }}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_textarea(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" 
+        for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls">
+        {{ field(class="span6", rows="5") }}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_readonlytextarea(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" 
+        for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls readonly">
+        {{ field(class="span6", rows="5") }}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+    <script type="text/javascript">
+    $('.readonly input, .readonly textarea').each(function() {
+        $(this).attr('readonly', 'readonly');
+    });
+    </script>
+</div>
+{% endmacro %}
+
+{% macro render_input(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" 
+        for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls">
+        {{ field }}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_login_input(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    {{ field.label }}
+    {{ field(class="form-control") }}
+    <span class="help-inline">{{ field.description }}</span>
+    {% if field.errors -%}
+        {% for error in field.errors -%}
+        <span class="help-block error">{{ error }}</span>
+        {%- endfor %}
+    {%- endif %}
+</div>
+{% endmacro %}
+
+{% macro render_readonlyinput(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" 
+        for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls readonly">
+        {{ field }}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+    <script type="text/javascript">
+    $('.readonly input').each(function() {
+        $(this).attr('readOnly', true);
+    });
+    </script>
+</div>
+{% endmacro %}
+
+{% macro render_login_readonlyinput(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    {{ field.label }}
+    {{ field(class="form-control readonly") }}
+    <span class="help-inline">{{ field.description }}</span>
+    {% if field.errors -%}
+        {% for error in field.errors -%}
+        <span class="help-block error">{{ error }}</span>
+        {%- endfor %}
+    {%- endif %}
+    <script type="text/javascript">
+    $('input.readonly').each(function() {
+        $(this).attr('readOnly', true);
+    });
+    </script>
+</div>
+{% endmacro %}
+
+{% macro render_action(field) %}
+<div class="control-group">
+    <div class="form-actions pull-left form-actions-new">
+        {{ field(class_="btn btn-primary") }}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_login_action(field) %}
+<div class="submit">
+    {{ field(class="btn btn-primary") }}
+</div>
+{% endmacro %}
+
+{% macro render_switch_form(url, form, horizontal=False, legend=None, confirm_msg=None) %}
+
+<form class="{% if horizontal %}form-horizontal{% endif %}" method="POST" action="{{ url }}"
+    {% if confirm_msg %}onsubmit='return confirm("{{ confirm_msg }}");' {% endif %} 
+    {% if form.multipart %}enctype="multipart/form-data"{% endif %} >
+    {{ form.hidden_tag() }}
+    <fieldset>
+        {% if legend %}
+        <legend>{{ legend|safe }}</legend>
+        {% endif %}
+        {% set focus = True %}
+        {% for field in form %}
+            {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+                {% if field.type == "RadioField" %}
+                    {{ render_radio(field) }}
+                {% elif field.type == "RORadioField" %}
+                    {{ render_readonlyradio(field) }}
+                {% elif field.type == "BooleanField" %}
+                    {{ render_checkbox(field) }}
+                {% elif field.type == "SubmitField" %}
+                    {{ render_action(field) }}
+                {% elif field.type == "TextAreaField" %}
+                    {{ render_textarea(field) }}
+                {% elif field.type == "ROTextAreaField" %}
+                    {{ render_readonlytextarea(field) }}
+                {% elif field.type == "DateField" %}
+                    {{ render_datepicker(field) }}
+                {% elif field.type == "ROTextField" %}
+                    {{ render_readonlyinput(field) }}
+                {% elif field.type == "SwitchField" %}
+                    {{ render_switch(field) }}
+                {% elif field.type == "SelectField" %}
+                    {{ render_select(field) }}
+                {% elif field.type == "TextField" %}
+                    {% if focus %}
+                        {{ render_input(field) }}
+                        {% set focus = False %}
+                    {% else %}
+                        {{ render_input(field) }}
+                    {% endif %}
+                {% else %}
+                    {{ render_input(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </fieldset>
+</form>
+{% endmacro %}
+
+{% macro render_form(url, form, horizontal=False, legend=None, confirm_msg=None) %}
+
+<form class="{% if horizontal %}form-horizontal{% endif %}" method="POST" action="{{ url }}"
+    {% if confirm_msg %}onsubmit='return confirm("{{ confirm_msg }}");' {% endif %} 
+    {% if form.multipart %}enctype="multipart/form-data"{% endif %} >
+    {{ form.hidden_tag() }}
+    <fieldset>
+        {% if legend %}
+        <legend>{{ legend|safe }}</legend>
+        {% endif %}
+        {% set focus = True %}
+        {% for field in form %}
+            {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+                {% if field.type == "RadioField" %}
+                    {{ render_radio(field) }}
+                {% elif field.type == "RORadioField" %}
+                    {{ render_readonlyradio(field) }}
+                {% elif field.type == "BooleanField" %}
+                    {{ render_checkbox(field) }}
+                {% elif field.type == "SubmitField" %}
+                    {{ render_action(field) }}
+                {% elif field.type == "TextAreaField" %}
+                    {{ render_textarea(field) }}
+                {% elif field.type == "ROTextAreaField" %}
+                    {{ render_readonlytextarea(field) }}
+                {% elif field.type == "DateField" %}
+                    {{ render_datepicker(field) }}
+                {% elif field.type == "SelectField" %}
+                    {{ render_select(field) }}
+                {% elif field.type == "ROTextField" %}
+                    {{ render_readonlyinput(field) }}
+                {% elif field.type == "TextField" %}
+                    {% if focus %}
+                        {{ render_input(field) }}
+                        {% set focus = False %}
+                    {% else %}
+                        {{ render_input(field) }}
+                    {% endif %}
+                {% else %}
+                    {{ render_input(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </fieldset>
+</form>
+{% endmacro %}
+
+{% macro render_comment_form(url, form, horizontal=False, legend=None, confirm_msg=None) %}
+
+<form class="{% if horizontal %}form-horizontal{% endif %}" method="POST" name="comment_form" action="{{ url }}"
+    {% if confirm_msg %}onsubmit='return confirm("{{ confirm_msg }}");' {% endif %} 
+    {% if form.multipart %}enctype="multipart/form-data"{% endif %} >
+    {{ form.hidden_tag() }}
+    <fieldset>
+        {% if legend %}
+        <legend>{{ legend|safe }}</legend>
+        {% endif %}
+        {% set focus = True %}
+        {% for field in form %}
+            {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+                {% if field.type == "RadioField" %}
+                    {{ render_radio(field) }}
+                {% elif field.type == "RORadioField" %}
+                    {{ render_readonlyradio(field) }}
+                {% elif field.type == "BooleanField" %}
+                    {{ render_checkbox(field) }}
+                {% elif field.type == "SubmitField" %}
+                    {{ render_action(field) }}
+                {% elif field.type == "TextAreaField" %}
+                    {{ render_textarea(field) }}
+                {% elif field.type == "ROTextAreaField" %}
+                    {{ render_readonlytextarea(field) }}
+                {% elif field.type == "DateField" %}
+                    {{ render_datepicker(field) }}
+                {% elif field.type == "SelectField" %}
+                    {{ render_comment_select(field) }}
+                {% elif field.type == "ROTextField" %}
+                    {{ render_readonlyinput(field) }}
+                {% elif field.type == "TextField" %}
+                    {% if focus %}
+                        {{ render_input(field) }}
+                        {% set focus = False %}
+                    {% else %}
+                        {{ render_input(field) }}
+                    {% endif %}
+                {% else %}
+                    {{ render_input(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </fieldset>
+</form>
+{% endmacro %}
+
+{% macro render_login_form(url, form, horizontal=False, legend=None, confirm_msg=None) %}
+
+<form class="{% if horizontal %}form-horizontal{% endif %}" method="POST" action="{{ url }}"
+    {% if confirm_msg %}onsubmit='return confirm("{{ confirm_msg }}");' {% endif %} 
+    {% if form.multipart %}enctype="multipart/form-data"{% endif %} >
+    {{ form.hidden_tag() }}
+        {% if legend %}
+        <legend>{{ legend|safe }}</legend>
+        {% endif %}
+        {% set focus = True %}
+        {% for field in form %}
+            {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+                {% if field.type == "RadioField" %}
+                    {{ render_radio(field) }}
+                {% elif field.type == "RORadioField" %}
+                    {{ render_readonlyradio(field) }}
+                {% elif field.type == "BooleanField" %}
+                    {{ render_checkbox(field) }}
+                {% elif field.type == "SubmitField" %}
+                    {{ render_login_action(field) }}
+                {% elif field.type == "TextAreaField" %}
+                    {{ render_textarea(field) }}
+                {% elif field.type == "SwitchField" %}
+                    {{ render_switch(field) }}
+                {% elif field.type == "DateField" %}
+                    {{ render_datepicker(field) }}
+                {% elif field.type == "ROTextAreaField" %}
+                    {{ render_readonlytextarea(field) }}
+                {% elif field.type == "ROTextField" %}
+                    {{ render_login_readonlyinput(field) }}
+                {% elif field.type == "TextField" %}
+                    {% if focus %}
+                        {{ render_login_input(field) }}
+                        {% set focus = False %}
+                    {% else %}
+                        {{ render_login_input(field) }}
+                    {% endif %}
+                {% else %}
+                    {{ render_login_input(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+</form>
+{% endmacro %}
+
+{% macro render_modal_form(id, name, url, form, horizontal=False, legend=None, confirm_msg=None) %}
+<div id="{{ id }}" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>{{ name }}</h3>
+  </div>
+  
+<form class="{% if horizontal %}form-horizontal{% endif %}" method="POST" action="{{ url }}" 
+    {% if form.multipart %}enctype="multipart/form-data"{% endif %} >
+    {{ form.hidden_tag() }}
+    {% set submit_field = None %}
+    <div class="modal-body">
+    <fieldset>
+        {% if legend %}
+        <legend>{{ legend|safe }}</legend>
+        {% endif %}
+        {% set focus = True %}
+
+        {% for field in form %}
+            {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+                {% if field.type == "RadioField" %}
+                    {{ render_radio(field) }}
+                {% elif field.type == "RORadioField" %}
+                    {{ render_readonlyradio(field) }}
+                {% elif field.type == "BooleanField" %}
+                    {{ render_checkbox(field) }}
+                {% elif field.type == "TextAreaField" %}
+                    {{ render_textarea(field) }}
+                {% elif field.type == "ROTextAreaField" %}
+                    {{ render_readonlytextarea(field) }}
+                {% elif field.type == "DateField" %}
+                    {{ render_datepicker(field) }}
+                {% elif field.type == "SelectField" %}
+                    {{ render_select(field) }}
+                {% elif field.type == "ROTextField" %}
+                    {{ render_readonlyinput(field) }}
+                {% elif field.type == "SubmitField" %}
+                    {% set submit_field = field %}
+                {% elif field.type == "TextField" %}
+                    {% if focus %}
+                        {{ render_input(field) }}
+                        {% set focus = False %}
+                    {% else %}
+                        {{ render_input(field) }}
+                    {% endif %}
+                {% elif field.type != "SubmitField" %}
+                    {{ render_input(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </fieldset>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">{{ _("Close") }}</a>
+        <input type="submit" class="btn btn-primary" value={% if confirm_msg %}{{ confirm_msg }}{% else %}{{ _("Save") }}{% endif %} />
+    </div>
+</form>
+</div>
+
+{% endmacro %}
+
+{% macro render_ajax_form(id, name, form, horizontal=False, legend=None) %}
+<div id="{{ id }}" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>{{ name }}</h3>
+  </div>
+  
+<form class="{% if horizontal %}form-horizontal{% endif %}">
+    {{ form.hidden_tag() }}
+    {% set submit_field = None %}
+    <div class="modal-body">
+    <fieldset>
+        {% if legend %}
+        <legend>{{ legend|safe }}</legend>
+        {% endif %}
+        {% set focus = True %}
+
+        {% for field in form %}
+            {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+                {% if field.type == "RadioField" %}
+                    {{ render_radio(field) }}
+                {% elif field.type == "RORadioField" %}
+                    {{ render_readonlyradio(field) }}
+                {% elif field.type == "BooleanField" %}
+                    {{ render_checkbox(field) }}
+                {% elif field.type == "TextAreaField" %}
+                    {{ render_textarea(field) }}
+                {% elif field.type == "ROTextAreaField" %}
+                    {{ render_readonlytextarea(field) }}
+                {% elif field.type == "SelectField" %}
+                    {{ render_select(field) }}
+                {% elif field.type == "DateField" %}
+                    {{ render_datepicker(field) }}
+                {% elif field.type == "ROTextField" %}
+                    {{ render_readonlyinput(field) }}
+                {% elif field.type == "SubmitField" %}
+                    {% set submit_field = field %}
+                {% elif field.type == "TextField" %}
+                    {% if focus %}
+                        {{ render_input(field) }}
+                        {% set focus = False %}
+                    {% else %}
+                        {{ render_input(field) }}
+                    {% endif %}
+                {% elif field.type != "SubmitField" %}
+                    {{ render_input(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </fieldset>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">{{ _("Close") }}</a>
+        <a class="btn btn-primary submit">{{ _("Save") }}</a>
+    </div>
+</form>
+</div>
+
+{% endmacro %}
+
+{% macro render_b3_modal_css() %}
+<style>
+.b3_modal-form form .control-group {
+    margin-bottom: 20px;
+}
+.b3_modal-form form .help-inline {
+    color: #F05D0E;
+}
+.b3_modal-form #image1_id {
+    height: 30px;
+}
+.b3_modal-form form .btn {
+    padding: 8px 24px;
+}
+.b3_modal-form form button.btn:hover {
+    background: #dfdfdf;
+}
+.b3_modal-form form label {
+    font-size: 16px;
+    font-weight: normal;
+    color: rgb(51, 51, 51);
+    display: inline-block;
+    font-weight: bold;
+    height: 22px;
+}
+</style>
+{% endmacro %}
+
+{% macro render_b3_modal_form(id, name, url, form, horizontal=False, legend=None, confirm_msg=None) %}
+<div id="{{ id }}" class="modal fade b3_modal-form">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>{{ name }}</h3>
+        </div>
+        <div class="modal-body">
+<form class="{% if horizontal %}form-horizontal{% endif %}" method="POST" action="{{ url }}" 
+    {% if form.multipart %}enctype="multipart/form-data"{% endif %} >
+    {{ form.hidden_tag() }}
+    {% set submit_field = None %}
+    <div class="modal-body">
+    <fieldset>
+        {% if legend %}
+        <legend>{{ legend|safe }}</legend>
+        {% endif %}
+        {% set focus = True %}
+        {% for field in form %}
+            {% if field.type != "HiddenField" and field.type != "CSRFTokenField" %}
+                {% if field.type == "RadioField" %}
+                    {{ render_radio(field) }}
+                {% elif field.type == "RORadioField" %}
+                    {{ render_readonlyradio(field) }}
+                {% elif field.type == "BooleanField" %}
+                    {{ render_checkbox(field) }}
+                {% elif field.type == "SelectField" %}
+                    {{ render_select(field) }}
+                {% elif field.type == "TextAreaField" %}
+                    {{ render_textarea_new(field) }}
+                {% elif field.type == "ROTextAreaField" %}
+                    {{ render_readonlytextarea(field) }}
+                {% elif field.type == "DateField" %}
+                    {{ render_datepicker(field) }}
+                {% elif field.type == "ROTextField" %}
+                    {{ render_readonlyinput(field) }}
+                {% elif field.type == "SubmitField" %}
+                    {% set submit_field = field %}
+                {% elif field.type == "TextField" %}
+                    {% if focus %}
+                        {{ render_input_new(field) }}
+                        {% set focus = False %}
+                    {% else %}
+                        {{ render_input_new(field) }}
+                    {% endif %}
+                {% elif field.type != "SubmitField" %}
+                    {{ render_input_new(field) }}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </fieldset>
+    </div>
+           <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            <input type="submit" value="确定" class="btn btn-primary" />
+        </div>
+    </div>
+    </div>
+</form>
+</div>
+</div>
+
+{% endmacro %}
+
+{% macro render_textarea_new(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" 
+        for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <div class="controls">
+        {{ field(class="form-control", rows="5") }}
+        <span class="help-inline">{{ field.description }}</span>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_input_new(field) %}
+<div class="control-group{% if field.errors %} error{% endif %}">
+    <label class="control-label" 
+        for="{{ field.id }}">
+        {{ field.label }}
+    </label>
+    <span class="help-inline">{% if field.description %}（{{ field.description }}）{% endif %}</span>
+    <div class="controls">
+        <input type="text" class="form-control" id="{{ field.id }}" name="{{ field.id }}" value="{{ field.data or '' }}"/>
+        {% if field.errors -%}
+            {% for error in field.errors -%}
+            <span class="help-block error">{{ error }}</span>
+            {%- endfor %}
+        {%- endif %}
+    </div>
+</div>
+{% endmacro %}

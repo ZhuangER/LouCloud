@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
+from flask.ext.login import LoginManager
+login_manager = LoginManager()
+
+from flask.ext.sqlalchemy import SQLAlchemy
+db = SQLAlchemy()
+

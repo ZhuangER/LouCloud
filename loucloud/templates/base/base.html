@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>LouCloud</title>
+	<script src="/static/js/jquery-1.11.3.min.js"></script>
+	<script src="/static/js/index.js"></script>
+	<script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+</head>
+<body style="padding-top: 20px; padding-bottom: 20px">
+    {% block topbar %}
+    <div class='container'>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{{ url_for('frontend.index') }}">LouCloud</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        {% if current_user.is_authenticated() %}
+                        {% if current_user.is_admin() %}
+                        <li><a href="{{ url_for('user.admin') }}">User</a></li>
+                        <li><a href="{{ url_for('host.index') }}">Host</a></li>
+                        <li><a href="/">Image</a></li>
+                        <li><a href="/">Template</a></li>
+                        {% endif %}
+                        <li><a href="/">VirtualMachine</a></li>
+                        {% endif %}
+                        
+                        <li><a href='https://www.shiyanlou.com/courses/354'>About</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                    {% if current_user.is_authenticated() %}
+                        <li><a href="{{ url_for('user.index') }}">{{ current_user.name }}</a></li>
+                        <li><a href="{{ url_for('frontend.logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('frontend.login') }}">Login</a></li>
+                    {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    {% endblock %}
+    {% block flash_message %}
+        <div class="container-fluid">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <div class="container-fluid">
+                <div id='flash_message_container'>
+                    {% for category, msg in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <button type="button" class="close" data-dismiss="alert">×</button>
+                            {{ msg }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        {% endwith %}
+        </div>
+    {% endblock %}
+    <div class="container">
+    {% block body %}
+    {% endblock %}
+    </div>
+</body>
+</html>

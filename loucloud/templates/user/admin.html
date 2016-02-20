@@ -1,0 +1,27 @@
+{% extends "base/base.html" %}
+
+{% from "macros/_form.html" import render_form %}
+
+{% block body %}
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>type_code</th>
+            <th>edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in users %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.type_code }}</td>
+            <td>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
